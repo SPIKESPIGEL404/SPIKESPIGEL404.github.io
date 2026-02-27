@@ -17,10 +17,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "name.dev",
-    template: "%s | name.dev",
+    default: "kelsen.dev",
+    template: "%s | kelsen.dev",
   },
-  description: "Personal website, blog, and project showcase.",
+  description:
+    "Kelsen Lu — Co-founder & CEO of AiMo Network. Building decentralized AI infrastructure on Solana and Base.",
 };
 
 export default function RootLayout({

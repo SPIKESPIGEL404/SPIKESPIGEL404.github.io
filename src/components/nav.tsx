@@ -6,7 +6,7 @@ export function Nav() {
     <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-sm">
       <nav className="mx-auto flex max-w-3xl items-center justify-between px-6 py-4">
         <Link href="/" className="font-mono text-sm font-semibold">
-          name.dev
+          kelsen.dev
         </Link>
         <div className="flex items-center gap-6">
           <Link

@@ -8,32 +8,32 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    title: "Project Alpha",
+    title: "AiMo Network",
     description:
-      "A CLI tool that does something useful. Built to solve a real problem with an elegant interface.",
-    tags: ["rust", "cli"],
-    github: "https://github.com/username/project-alpha",
+      "A permissionless AI marketplace on Solana and Base. Humans and autonomous agents access AI inference without KYC via stablecoin micropayments.",
+    tags: ["solana", "base", "ai", "defi"],
+    github: "https://github.com/SPIKESPIGEL404/aimo-network-docs",
+    live: "https://aimo.network",
   },
   {
-    title: "Project Beta",
+    title: "x402-flash",
     description:
-      "A web application with a clean UI and fast performance. Focused on developer experience.",
-    tags: ["typescript", "react", "next.js"],
-    github: "https://github.com/username/project-beta",
-    live: "https://project-beta.vercel.app",
+      "Coinbase CDP Award winner and ETHGlobal Finalist. Enabling instant micropayments for AI agent interactions.",
+    tags: ["ethereum", "payments", "agents"],
+    github: "https://github.com/SPIKESPIGEL404/x402-flash",
   },
   {
-    title: "Project Gamma",
+    title: "Onchain Pal",
     description:
-      "A backend API with solid architecture. Handles high throughput with minimal latency.",
-    tags: ["go", "api", "postgres"],
-    github: "https://github.com/username/project-gamma",
+      "An on-chain companion tool for navigating crypto and DeFi interactions.",
+    tags: ["web3", "defi", "typescript"],
+    github: "https://github.com/SPIKESPIGEL404/onchain-pal",
   },
   {
-    title: "Project Delta",
+    title: "Crypto AI Trading Bot",
     description:
-      "A machine learning project exploring novel approaches to an interesting problem.",
-    tags: ["python", "ml", "pytorch"],
-    github: "https://github.com/username/project-delta",
+      "An AI-powered trading bot for crypto markets with automated strategy execution.",
+    tags: ["python", "ai", "trading"],
+    github: "https://github.com/SPIKESPIGEL404/crypto-ai-trading-bot",
   },
 ];

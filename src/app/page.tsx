@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowRight, Github, Twitter, Mail } from "lucide-react";
 import {
   Card,
   CardHeader,
@@ -21,15 +21,35 @@ export default function Home() {
       {/* Hero */}
       <section className="py-20">
         <h1 className="font-mono text-2xl font-bold tracking-tight">
-          Hi, I&apos;m Name
+          Hi, I&apos;m Kelsen
         </h1>
-        <p className="mt-4 max-w-lg text-muted-foreground leading-relaxed">
-          Short bio. Two or three lines about who you are, what you do, and what
-          you care about. Keep it concise and authentic.
+        <p className="mt-4 text-muted-foreground leading-relaxed">
+          Co-founder &amp; CEO of{" "}
+          <a
+            href="https://aimo.network"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-foreground underline underline-offset-4"
+          >
+            AiMo Network
+          </a>{" "}
+          — a permissionless AI marketplace on Solana and Base that lets humans
+          and autonomous agents access AI inference without KYC, powered by
+          stablecoin micropayments.
+        </p>
+        <p className="mt-3 text-muted-foreground leading-relaxed">
+          Previously won the Coinbase CDP Award and was an ETHGlobal Finalist
+          for x402-flash. Senior at NYU studying Media Theory with minors in CS
+          and Business, currently on a gap year to grow AiMo after securing
+          angel investment.
+        </p>
+        <p className="mt-3 text-sm text-muted-foreground">
+          Decentralized infrastructure &middot; Autonomous agents &middot; AI
+          &times; open finance
         </p>
         <div className="mt-6 flex gap-4">
           <a
-            href="https://github.com/username"
+            href="https://github.com/SPIKESPIGEL404"
             target="_blank"
             rel="noopener noreferrer"
             className="text-muted-foreground hover:text-foreground transition-colors"
@@ -37,18 +57,12 @@ export default function Home() {
             <Github className="h-5 w-5" />
           </a>
           <a
-            href="https://linkedin.com/in/username"
+            href="https://x.com/spikel404"
             target="_blank"
             rel="noopener noreferrer"
             className="text-muted-foreground hover:text-foreground transition-colors"
           >
-            <Linkedin className="h-5 w-5" />
-          </a>
-          <a
-            href="mailto:you@example.com"
-            className="text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <Mail className="h-5 w-5" />
+            <Twitter className="h-5 w-5" />
           </a>
         </div>
       </section>
