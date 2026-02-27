@@ -1,0 +1,28 @@
+---
+title: "Notes on System Design"
+date: "2026-01-15"
+summary: "Key principles I keep coming back to when designing systems, from simplicity to failure modes."
+tags: ["architecture", "distributed-systems"]
+---
+
+## Start simple
+
+The best architecture is the one you don't build yet. A monolith that works is better than a distributed system that doesn't. You can always extract services later when you actually need them.
+
+## Design for failure
+
+Every external dependency will fail. Every network call will timeout. Every disk will fill up. Design your system assuming these failures happen regularly, because they do.
+
+## Key principles
+
+- **Idempotency**: Make operations safe to retry. This simplifies error recovery enormously.
+- **Backpressure**: If a component is overwhelmed, it should push back rather than silently dropping work.
+- **Observability**: If you can't see what's happening, you can't fix it. Structured logging, metrics, and tracing are not optional.
+
+## The database is your bottleneck
+
+Until proven otherwise, assume the database is the bottleneck. Optimize queries, add appropriate indexes, and consider read replicas before reaching for caching layers.
+
+## Caching
+
+Cache invalidation is one of the two hard problems in computer science. Before adding a cache, make sure you understand your invalidation strategy and can tolerate stale data.

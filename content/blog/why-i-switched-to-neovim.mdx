@@ -1,0 +1,35 @@
+---
+title: "Why I Switched to Neovim"
+date: "2025-12-03"
+summary: "After years of VS Code, I switched to Neovim. Here's what convinced me and what the transition was like."
+tags: ["tools", "productivity"]
+---
+
+## The motivation
+
+VS Code is a great editor. But after years of use, I started feeling the overhead — Electron memory usage, extension conflicts, slow startup. I wanted something faster and more keyboard-driven.
+
+## The transition
+
+The learning curve is real. I spent the first two weeks being significantly slower. But I committed to using Neovim for everything and gradually built muscle memory.
+
+## What I gained
+
+- **Speed**: Neovim starts in milliseconds. Editing feels instant.
+- **Composability**: Vim motions compose. Once you learn the grammar (verb + noun), you can express complex edits concisely.
+- **Focus**: No sidebar, no status bar clutter, no notifications. Just code.
+- **Portability**: My config is a git repo. SSH into any server and I have my full editor.
+
+## My setup
+
+I keep my config minimal:
+
+- `lazy.nvim` for plugin management
+- `telescope` for fuzzy finding
+- `treesitter` for syntax highlighting
+- `lspconfig` for language servers
+- A custom colorscheme with minimal colors
+
+## Would I recommend it?
+
+Only if you enjoy tinkering and want a deeper relationship with your tools. VS Code is objectively more productive out of the box. Neovim is an investment that pays off over years.

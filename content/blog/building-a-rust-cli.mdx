@@ -1,0 +1,45 @@
+---
+title: "Building a Rust CLI Tool"
+date: "2026-02-20"
+summary: "Walking through the process of building a command-line tool in Rust, from argument parsing to distribution."
+tags: ["rust", "cli", "tooling"]
+---
+
+## Why Rust for CLI tools?
+
+Rust compiles to a single binary with no runtime dependencies. This makes distribution trivial — just ship the binary. Combined with excellent error handling and blazing fast execution, it's hard to beat for CLI work.
+
+## Getting started
+
+The ecosystem has mature libraries for everything you need:
+
+- `clap` for argument parsing
+- `anyhow` for error handling
+- `indicatif` for progress bars
+- `colored` for terminal colors
+
+## Argument parsing with clap
+
+Clap's derive API makes defining your CLI interface declarative. You define a struct, annotate it, and get parsing, validation, and help text generation for free.
+
+```rust
+use clap::Parser;
+
+#[derive(Parser)]
+#[command(name = "mytool")]
+struct Cli {
+    #[arg(short, long)]
+    verbose: bool,
+
+    #[arg(short, long, default_value = ".")]
+    path: String,
+}
+```
+
+## Error handling
+
+Use `anyhow` for application code and `thiserror` for libraries. This gives you ergonomic error propagation with the `?` operator while still providing useful error messages.
+
+## Distribution
+
+GitHub Releases with pre-built binaries for each platform is the simplest approach. Combine it with a GitHub Action that builds on tag push and you have a fully automated release pipeline.
