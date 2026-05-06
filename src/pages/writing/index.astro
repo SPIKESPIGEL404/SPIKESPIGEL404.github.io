@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../../keystatic.config';
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const posts = await reader.collections.posts.all();
+
+const publishedPosts = posts
+  .filter(post => !post.entry.draft)
+  .sort((a, b) => {
+    const dateA = new Date(a.entry.date).getTime();
+    const dateB = new Date(b.entry.date).getTime();
+    return dateB - dateA;
+  });
+---
+
+<BaseLayout title="Writing - Kelsen Liu">
+  <div class="space-y-8">
+    <h1 class="text-2xl font-bold">Writing</h1>
+    
+    {publishedPosts.length === 0 ? (
+      <p class="text-zinc-500">No posts yet.</p>
+    ) : (
+      <div class="space-y-6">
+        {publishedPosts.map((post) => {
+          const date = new Date(post.entry.date).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          });
+          
+          return (
+            <article>
+              <a href={`/writing/${post.slug}`} class="block group">
+                <h2 class="text-lg font-semibold mb-1 group-hover:underline">
+                  {post.entry.title}
+                </h2>
+                <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-1">
+                  {post.entry.description}
+                </p>
+                <time class="text-sm text-zinc-500">{date}</time>
+              </a>
+            </article>
+          );
+        })}
+      </div>
+    )}
+  </div>
+</BaseLayout>

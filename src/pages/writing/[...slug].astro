@@ -1,0 +1,28 @@
+---
+import PostLayout from '../../layouts/PostLayout.astro';
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../../keystatic.config';
+
+export async function getStaticPaths() {
+  const reader = createReader(process.cwd(), keystaticConfig);
+  const posts = await reader.collections.posts.all();
+  
+  return posts
+    .filter(post => !post.entry.draft)
+    .map(post => ({
+      params: { slug: post.slug },
+      props: { post }
+    }));
+}
+
+const { post } = Astro.props;
+const content = await post.entry.content();
+---
+
+<PostLayout 
+  title={post.entry.title} 
+  date={post.entry.date}
+  description={post.entry.description}
+>
+  <Fragment set:html={content} />
+</PostLayout>

@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../keystatic.config';
+import { marked } from 'marked';
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const about = await reader.singletons.about.read();
+
+const title = about?.title || 'About';
+// Markdoc fields are functions when format is json
+const contentHtml = about?.content ? await about.content() : null;
+---
+
+<BaseLayout title={`${title} - Kelsen Liu`}>
+  <div class="space-y-8">
+    <h1 class="text-2xl font-bold">{title}</h1>
+    
+    {contentHtml ? (
+      <div class="prose prose-zinc dark:prose-invert max-w-none">
+        <Fragment set:html={contentHtml} />
+      </div>
+    ) : (
+      <p class="text-zinc-500">Content coming soon.</p>
+    )}
+  </div>
+</BaseLayout>

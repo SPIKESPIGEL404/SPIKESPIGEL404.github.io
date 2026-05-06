@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../../keystatic.config';
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const projects = await reader.collections.projects.all();
+
+const activeProjects = projects.filter(p => p.entry.status === 'active');
+const archivedProjects = projects.filter(p => p.entry.status === 'archived');
+---
+
+<BaseLayout title="Projects - Kelsen Liu">
+  <div class="space-y-8">
+    <h1 class="text-2xl font-bold">Projects</h1>
+    
+    {activeProjects.length === 0 && archivedProjects.length === 0 ? (
+      <p class="text-zinc-500">No projects yet.</p>
+    ) : (
+      <>
+        {activeProjects.length > 0 && (
+          <section class="space-y-6">
+            <h2 class="text-lg font-semibold text-zinc-700 dark:text-zinc-300">Active</h2>
+            <div class="space-y-6">
+              {activeProjects.map((project) => (
+                <article class="space-y-2">
+                  <h3 class="text-lg font-semibold">{project.entry.name}</h3>
+                  <p class="text-sm text-zinc-600 dark:text-zinc-400 whitespace-pre-wrap">
+                    {project.entry.description}
+                  </p>
+                  <div class="flex gap-4 text-sm">
+                    {project.entry.github && (
+                      <a 
+                        href={project.entry.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:underline"
+                      >
+                        GitHub
+                      </a>
+                    )}
+                    {project.entry.live && (
+                      <a 
+                        href={project.entry.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:underline"
+                      >
+                        Live
+                      </a>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+        
+        {archivedProjects.length > 0 && (
+          <section class="space-y-6">
+            <h2 class="text-lg font-semibold text-zinc-700 dark:text-zinc-300">Archived</h2>
+            <div class="space-y-6">
+              {archivedProjects.map((project) => (
+                <article class="space-y-2">
+                  <h3 class="text-lg font-semibold text-zinc-600 dark:text-zinc-400">
+                    {project.entry.name}
+                  </h3>
+                  <p class="text-sm text-zinc-500 dark:text-zinc-500 whitespace-pre-wrap">
+                    {project.entry.description}
+                  </p>
+                  <div class="flex gap-4 text-sm">
+                    {project.entry.github && (
+                      <a 
+                        href={project.entry.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 hover:underline"
+                      >
+                        GitHub
+                      </a>
+                    )}
+                    {project.entry.live && (
+                      <a 
+                        href={project.entry.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 hover:underline"
+                      >
+                        Live
+                      </a>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+      </>
+    )}
+  </div>
+</BaseLayout>

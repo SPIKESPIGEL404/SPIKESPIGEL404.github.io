@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Personal Site
 
-## Getting Started
+A minimal personal website built with Astro, Keystatic CMS, and deployed via GitHub Pages.
 
-First, run the development server:
+## Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **[Astro](https://astro.build)** - Static Site Generator
+- **[Keystatic](https://keystatic.com)** - Git-based CMS
+- **[Tailwind CSS](https://tailwindcss.com)** - Styling
+- **[Bun](https://bun.sh)** - JavaScript runtime & toolkit
+- **GitHub Pages** - Hosting
+- **GitHub Actions** - CI/CD
+
+## Features
+
+- ✨ Minimal, typography-first design
+- 🌙 Dark mode support (auto via system preference)
+- 📝 Markdown-powered content
+- 🚀 Zero JavaScript by default
+- 📱 Fully responsive
+- 🔍 SEO optimized
+
+## Project Structure
+
+```
+/
+├── content/           # Markdown content managed by Keystatic
+│   ├── pages/        # Singleton pages (home, about)
+│   ├── posts/        # Blog posts
+│   └── projects/     # Project entries
+├── src/
+│   ├── layouts/      # Astro layouts
+│   ├── pages/        # Astro pages and routing
+│   └── styles/       # Global styles
+├── public/           # Static assets
+└── .github/          # GitHub Actions workflows
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Prerequisites
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- [Bun](https://bun.sh) v1.0+
 
-## Learn More
+```bash
+# Install Bun (if not already installed)
+curl -fsSL https://bun.sh/install | bash
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Commands
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+# Install dependencies
+bun install
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Start dev server with Keystatic CMS at localhost:4321
+bun dev
 
-## Deploy on Vercel
+# Build for production
+bun run build
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Preview production build
+bun run preview
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Content Management
+
+Access Keystatic CMS at `http://localhost:4321/keystatic` during development to manage content through the browser UI. All content is stored as Markdown/JSON files in the `content/` directory and committed to git.
+
+## Deployment
+
+The site automatically deploys to GitHub Pages when pushing to the `main` branch via GitHub Actions.
+
+### Setup
+
+1. Enable GitHub Pages in repository settings
+2. Set source to "GitHub Actions"
+3. (Optional) Configure custom domain in Pages settings
+4. (Optional) Set up GitHub OAuth app for production Keystatic access
+
+## License
+
+MIT

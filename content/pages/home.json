@@ -1,0 +1,23 @@
+{
+  "name": "Kelsen Liu",
+  "tagline": "Building things on the internet",
+  "bio": "Currently working on open-source tools and developer experience. Previously built products at various startups.",
+  "links": [
+    {
+      "label": "Writing",
+      "url": "/writing"
+    },
+    {
+      "label": "Projects",
+      "url": "/projects"
+    },
+    {
+      "label": "GitHub",
+      "url": "https://github.com/kelsenliu"
+    },
+    {
+      "label": "Twitter",
+      "url": "https://twitter.com/kelsenliu"
+    }
+  ]
+}
