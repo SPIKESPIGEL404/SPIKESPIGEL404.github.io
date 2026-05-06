@@ -15,7 +15,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 export default defineConfig({
-  site: 'https://kelsenliu.com',
+  site: 'https://kelsenliu.com', // Custom domain configured
   output: 'static',
   integrations,
 });

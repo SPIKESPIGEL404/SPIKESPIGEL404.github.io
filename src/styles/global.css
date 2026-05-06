@@ -1,51 +1,336 @@
+/* Import monospace fonts */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --tw-prose-body: theme('colors.zinc.900');
-    --tw-prose-headings: theme('colors.zinc.900');
-    --tw-prose-links: theme('colors.zinc.900');
-    --tw-prose-bold: theme('colors.zinc.900');
-    --tw-prose-counters: theme('colors.zinc.600');
-    --tw-prose-bullets: theme('colors.zinc.400');
-    --tw-prose-hr: theme('colors.zinc.200');
-    --tw-prose-quotes: theme('colors.zinc.900');
-    --tw-prose-quote-borders: theme('colors.zinc.200');
-    --tw-prose-captions: theme('colors.zinc.700');
-    --tw-prose-code: theme('colors.zinc.900');
-    --tw-prose-pre-code: theme('colors.zinc.100');
-    --tw-prose-pre-bg: theme('colors.zinc.900');
-    --tw-prose-th-borders: theme('colors.zinc.200');
-    --tw-prose-td-borders: theme('colors.zinc.200');
+    /* Custom CSS variables for the geeky theme */
+    --glow-cyan: 0 0 20px theme('colors.cyan.400');
+    --glow-purple: 0 0 20px theme('colors.purple.400');
+    --glow-green: 0 0 20px theme('colors.green.400');
+    
+    /* Prose colors for light mode (cyberpunk-inspired) */
+    --tw-prose-body: theme('colors.gray.300');
+    --tw-prose-headings: theme('colors.cyan.400');
+    --tw-prose-links: theme('colors.cyan.400');
+    --tw-prose-bold: theme('colors.cyan.300');
+    --tw-prose-counters: theme('colors.gray.400');
+    --tw-prose-bullets: theme('colors.cyan.600');
+    --tw-prose-hr: theme('colors.gray.700');
+    --tw-prose-quotes: theme('colors.gray.300');
+    --tw-prose-quote-borders: theme('colors.cyan.500');
+    --tw-prose-captions: theme('colors.gray.400');
+    --tw-prose-code: theme('colors.green.400');
+    --tw-prose-pre-code: theme('colors.green.300');
+    --tw-prose-pre-bg: theme('colors.gray.900');
+    --tw-prose-th-borders: theme('colors.gray.600');
+    --tw-prose-td-borders: theme('colors.gray.700');
   }
 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --tw-prose-body: theme('colors.zinc.100');
-      --tw-prose-headings: theme('colors.zinc.100');
-      --tw-prose-links: theme('colors.zinc.100');
-      --tw-prose-bold: theme('colors.zinc.100');
-      --tw-prose-counters: theme('colors.zinc.400');
-      --tw-prose-bullets: theme('colors.zinc.600');
-      --tw-prose-hr: theme('colors.zinc.800');
-      --tw-prose-quotes: theme('colors.zinc.100');
-      --tw-prose-quote-borders: theme('colors.zinc.800');
-      --tw-prose-captions: theme('colors.zinc.400');
-      --tw-prose-code: theme('colors.zinc.100');
-      --tw-prose-pre-code: theme('colors.zinc.100');
-      --tw-prose-pre-bg: theme('colors.zinc.800');
-      --tw-prose-th-borders: theme('colors.zinc.800');
-      --tw-prose-td-borders: theme('colors.zinc.800');
-    }
-
-    html {
-      @apply bg-zinc-950 text-zinc-100;
-    }
+  html {
+    @apply bg-black text-gray-100 scroll-smooth;
+    background: 
+      radial-gradient(circle at 25% 25%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(147, 51, 234, 0.1) 0%, transparent 50%),
+      linear-gradient(180deg, #000000 0%, #0a0a0a 100%);
+    min-height: 100vh;
   }
 
   body {
     @apply font-sans antialiased;
+    /* Terminal-like font stack */
+    font-family: 'Inter', 'JetBrains Mono', 'Fira Code', 'Monaco', 'Consolas', monospace;
+  }
+
+  /* Selection styling */
+  ::selection {
+    @apply bg-cyan-400/20 text-cyan-300;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-900;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-cyan-600/50 rounded;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-cyan-500/70;
+  }
+
+  /* Glitch effect for headings */
+  .glitch {
+    position: relative;
+    animation: glitch-skew 1s infinite linear alternate-reverse;
+  }
+  
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .glitch::before {
+    animation: glitch-anim 0.5s infinite linear alternate-reverse;
+    color: #ff0040;
+    z-index: -1;
+  }
+  
+  .glitch::after {
+    animation: glitch-anim2 1s infinite linear alternate-reverse;
+    color: #00ffff;
+    z-index: -2;
+  }
+
+  /* Terminal cursor */
+  .terminal-cursor::after {
+    content: '|';
+    color: theme('colors.cyan.400');
+    animation: blink 1s infinite;
+  }
+
+  /* Hover glow effects */
+  .glow-cyan:hover {
+    box-shadow: var(--glow-cyan);
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .glow-purple:hover {
+    box-shadow: var(--glow-purple);
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .glow-green:hover {
+    box-shadow: var(--glow-green);
+    transition: box-shadow 0.3s ease;
+  }
+}
+
+@layer components {
+  /* Terminal-style code blocks */
+  .terminal {
+    @apply bg-gray-900 border border-gray-700 rounded-lg p-4 font-mono text-sm;
+    background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+  }
+  
+  .terminal-header {
+    @apply flex items-center justify-between mb-3 pb-2 border-b border-gray-700;
+  }
+  
+  .terminal-dots {
+    @apply flex space-x-2;
+  }
+  
+  .terminal-dot {
+    @apply w-3 h-3 rounded-full;
+  }
+  
+  .terminal-dot.red {
+    @apply bg-red-500;
+  }
+  
+  .terminal-dot.yellow {
+    @apply bg-yellow-500;
+  }
+  
+  .terminal-dot.green {
+    @apply bg-green-500;
+  }
+
+  /* Card components with cyberpunk styling */
+  .cyber-card {
+    @apply bg-gray-900/50 border border-cyan-500/30 rounded-lg p-6 backdrop-blur-sm;
+    background: linear-gradient(145deg, rgba(0,0,0,0.7), rgba(15,23,42,0.7));
+    transition: all 0.3s ease;
+  }
+  
+  .cyber-card:hover {
+    @apply border-cyan-400/50;
+    box-shadow: 0 0 30px rgba(6, 182, 212, 0.3);
+    transform: translateY(-2px);
+  }
+
+  /* Button styles */
+  .btn-cyber {
+    @apply px-6 py-3 bg-transparent border border-cyan-500 text-cyan-400 font-mono text-sm rounded;
+    @apply hover:bg-cyan-500 hover:text-black transition-all duration-300;
+    @apply focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-opacity-50;
+  }
+  
+  .btn-cyber:hover {
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+  }
+}
+
+/* Animations */
+@keyframes glitch-anim {
+  0% {
+    clip: rect(10px, 9999px, 31px, 0);
+    transform: skew(0.85deg);
+  }
+  5% {
+    clip: rect(70px, 9999px, 71px, 0);
+    transform: skew(0.85deg);
+  }
+  10% {
+    clip: rect(30px, 9999px, 71px, 0);
+    transform: skew(0.85deg);
+  }
+  15% {
+    clip: rect(10px, 9999px, 105px, 0);
+    transform: skew(0.85deg);
+  }
+  20% {
+    clip: rect(40px, 9999px, 105px, 0);
+    transform: skew(0.85deg);
+  }
+  25% {
+    clip: rect(10px, 9999px, 15px, 0);
+    transform: skew(0.85deg);
+  }
+  30% {
+    clip: rect(80px, 9999px, 15px, 0);
+    transform: skew(0.85deg);
+  }
+  35% {
+    clip: rect(50px, 9999px, 40px, 0);
+    transform: skew(0.85deg);
+  }
+  40% {
+    clip: rect(10px, 9999px, 85px, 0);
+    transform: skew(0.85deg);
+  }
+  45% {
+    clip: rect(40px, 9999px, 50px, 0);
+    transform: skew(0.85deg);
+  }
+  50% {
+    clip: rect(80px, 9999px, 15px, 0);
+    transform: skew(0.85deg);
+  }
+  55% {
+    clip: rect(10px, 9999px, 70px, 0);
+    transform: skew(0.85deg);
+  }
+  60% {
+    clip: rect(80px, 9999px, 50px, 0);
+    transform: skew(0.85deg);
+  }
+  65% {
+    clip: rect(50px, 9999px, 20px, 0);
+    transform: skew(0.85deg);
+  }
+  70% {
+    clip: rect(10px, 9999px, 90px, 0);
+    transform: skew(0.85deg);
+  }
+  75% {
+    clip: rect(80px, 9999px, 50px, 0);
+    transform: skew(0.85deg);
+  }
+  80% {
+    clip: rect(10px, 9999px, 30px, 0);
+    transform: skew(0.85deg);
+  }
+  85% {
+    clip: rect(50px, 9999px, 105px, 0);
+    transform: skew(0.85deg);
+  }
+  90% {
+    clip: rect(10px, 9999px, 15px, 0);
+    transform: skew(0.85deg);
+  }
+  95% {
+    clip: rect(80px, 9999px, 85px, 0);
+    transform: skew(0.85deg);
+  }
+  100% {
+    clip: rect(10px, 9999px, 31px, 0);
+    transform: skew(0.85deg);
+  }
+}
+
+@keyframes glitch-anim2 {
+  0% {
+    clip: rect(65px, 9999px, 100px, 0);
+    transform: skew(0.44deg);
+  }
+  5% {
+    clip: rect(25px, 9999px, 50px, 0);
+    transform: skew(0.44deg);
+  }
+  10% {
+    clip: rect(75px, 9999px, 100px, 0);
+    transform: skew(0.44deg);
+  }
+  /* ... more keyframes ... */
+  100% {
+    clip: rect(65px, 9999px, 100px, 0);
+    transform: skew(0.44deg);
+  }
+}
+
+@keyframes glitch-skew {
+  0% {
+    transform: skew(0deg);
+  }
+  10% {
+    transform: skew(-1deg);
+  }
+  20% {
+    transform: skew(1deg);
+  }
+  30% {
+    transform: skew(-1deg);
+  }
+  40% {
+    transform: skew(1deg);
+  }
+  50% {
+    transform: skew(0deg);
+  }
+  60% {
+    transform: skew(-1deg);
+  }
+  70% {
+    transform: skew(1deg);
+  }
+  80% {
+    transform: skew(-1deg);
+  }
+  90% {
+    transform: skew(1deg);
+  }
+  100% {
+    transform: skew(0deg);
+  }
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Matrix-style rain effect (subtle) */
+@keyframes matrix-rain {
+  0% {
+    transform: translateY(-100vh);
+  }
+  100% {
+    transform: translateY(100vh);
   }
 }

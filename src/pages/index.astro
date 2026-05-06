@@ -12,31 +12,135 @@ const links = home?.links || [];
 ---
 
 <BaseLayout title={name}>
-  <div class="space-y-8">
-    <div>
-      <h1 class="text-2xl font-bold mb-2">{name}</h1>
-      <p class="text-zinc-600 dark:text-zinc-400">{tagline}</p>
-    </div>
-    
-    {home?.bio && (
-      <div class="text-zinc-600 dark:text-zinc-400">
-        <p>{home.bio}</p>
+  <!-- Hero Section -->
+  <section class="min-h-[80vh] flex items-center justify-center relative">
+    <div class="max-w-4xl mx-auto text-center space-y-8">
+      <!-- Terminal-style greeting -->
+      <div class="terminal max-w-2xl mx-auto">
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <div class="terminal-dot red"></div>
+            <div class="terminal-dot yellow"></div>
+            <div class="terminal-dot green"></div>
+          </div>
+          <span class="text-gray-400 text-xs font-mono">~/portfolio</span>
+        </div>
+        <div class="space-y-2 text-left">
+          <p class="text-green-400 font-mono text-sm">
+            <span class="text-gray-500">$</span> whoami
+          </p>
+          <p class="text-cyan-400 font-mono text-lg ml-4">{name}</p>
+          <p class="text-green-400 font-mono text-sm mt-4">
+            <span class="text-gray-500">$</span> echo $ROLE
+          </p>
+          <p class="text-purple-400 font-mono ml-4">{tagline}</p>
+          <p class="text-green-400 font-mono text-sm mt-4">
+            <span class="text-gray-500">$</span> cat bio.txt
+          </p>
+          {home?.bio && (
+            <p class="text-gray-300 font-mono text-sm ml-4 leading-relaxed">
+              {home.bio}
+            </p>
+          )}
+          <div class="flex items-center mt-4">
+            <span class="text-green-400 font-mono text-sm">$</span>
+            <span class="text-cyan-400 font-mono text-sm ml-1 terminal-cursor">connect</span>
+          </div>
+        </div>
       </div>
-    )}
-    
-    {links.length > 0 && (
-      <nav class="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+
+      <!-- Glitch effect title -->
+      <div class="relative">
+        <h1 
+          class="glitch text-6xl md:text-8xl font-bold text-cyan-400 font-mono select-none"
+          data-text={name}
+        >
+          {name}
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-400 font-mono mt-4">
+          <span class="text-gray-600">></span> {tagline}
+          <span class="animate-pulse text-cyan-400">_</span>
+        </p>
+      </div>
+
+      <!-- Status indicator -->
+      <div class="flex items-center justify-center space-x-4 text-sm font-mono">
+        <div class="flex items-center space-x-2 cyber-card px-4 py-2">
+          <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+          <span class="text-green-400">online</span>
+        </div>
+        <div class="flex items-center space-x-2 cyber-card px-4 py-2">
+          <div class="w-2 h-2 bg-cyan-400 rounded-full"></div>
+          <span class="text-cyan-400">available for work</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Links Section -->
+  <section class="py-16">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-2xl font-bold text-cyan-400 font-mono mb-8 flex items-center">
+        <span class="text-gray-600 mr-2">$</span>
+        <span class="text-green-400">ls</span>
+        <span class="ml-2">-la</span>
+        <span class="ml-4 text-gray-500"># explore my work</span>
+      </h2>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {links.map((link) => (
           <a 
-            href={link.url} 
-            class="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:underline"
+            href={link.url}
             target={link.url?.startsWith('http') ? '_blank' : undefined}
             rel={link.url?.startsWith('http') ? 'noopener noreferrer' : undefined}
+            class="cyber-card group glow-cyan"
           >
-            {link.label}
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-cyan-400 font-mono font-semibold group-hover:text-white transition-colors">
+                {link.label}
+              </h3>
+              <span class="text-gray-600 group-hover:text-cyan-400 transition-colors">
+                →
+              </span>
+            </div>
+            <p class="text-gray-400 text-sm font-mono">
+              ./{link.label.toLowerCase().replace(' ', '-')}
+            </p>
           </a>
         ))}
-      </nav>
-    )}
-  </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills/Tech Stack -->
+  <section class="py-16">
+    <div class="max-w-4xl mx-auto">
+      <div class="terminal">
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <div class="terminal-dot red"></div>
+            <div class="terminal-dot yellow"></div>
+            <div class="terminal-dot green"></div>
+          </div>
+          <span class="text-gray-400 text-xs font-mono">tech-stack.sh</span>
+        </div>
+        <div class="space-y-1 text-sm">
+          <p class="text-green-400">
+            <span class="text-gray-500">$</span> grep -r "favorite_tech" ~/.config/
+          </p>
+          <div class="ml-4 space-y-1 text-gray-300">
+            <p><span class="text-cyan-400">languages:</span> Rust, TypeScript, Python, Go</p>
+            <p><span class="text-purple-400">frameworks:</span> Astro, Next.js, SvelteKit, Axum</p>
+            <p><span class="text-yellow-400">tools:</span> Bun, Docker, k8s, GitHub Actions</p>
+            <p><span class="text-green-400">databases:</span> PostgreSQL, Redis, MongoDB</p>
+            <p><span class="text-blue-400">cloud:</span> AWS, Vercel, Railway, Fly.io</p>
+          </div>
+          <div class="flex items-center mt-4">
+            <span class="text-green-400">$</span>
+            <span class="text-gray-400 ml-1 animate-pulse">|</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
