@@ -2,10 +2,10 @@
 const currentPath = Astro.url.pathname;
 
 const navItems = [
-  { label: 'Home', href: '/', icon: '~' },
-  { label: 'Writing', href: '/writing', icon: '📝' },
-  { label: 'Projects', href: '/projects', icon: '🚀' },
-  { label: 'About', href: '/about', icon: '👤' },
+  { label: 'Home', href: '/' },
+  { label: 'Writing', href: '/writing' },
+  { label: 'Projects', href: '/projects' },
+  { label: 'About', href: '/about' },
 ];
 
 const isActive = (href: string) => {
@@ -14,87 +14,63 @@ const isActive = (href: string) => {
 };
 ---
 
-<header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-black/80 border-b border-cyan-900/50">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+<header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-black/90 border-b border-gray-800">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6">
     <div class="flex items-center justify-between h-16">
-      <!-- Logo/Name -->
-      <div class="flex items-center space-x-4">
-        <a href="/" class="group flex items-center space-x-2">
-          <div class="relative">
-            <div class="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-200"></div>
-            <div class="relative bg-black px-3 py-1 rounded-lg border border-cyan-500/50">
-              <span class="text-cyan-400 font-mono text-sm">
-                <span class="text-green-400">$</span> kelsen
-                <span class="animate-pulse">_</span>
-              </span>
-            </div>
-          </div>
-        </a>
-      </div>
+      <!-- Logo -->
+      <a href="/" class="font-mono text-sm">
+        <span class="text-gray-500">$</span>
+        <span class="text-white ml-1">kelsen</span>
+        <span class="text-gray-500 terminal-cursor"></span>
+      </a>
 
       <!-- Navigation -->
-      <nav class="hidden md:flex items-center space-x-1">
+      <nav class="hidden md:flex items-center space-x-8">
         {navItems.map((item) => (
           <a 
             href={item.href}
             class={`
-              relative px-4 py-2 font-mono text-sm transition-all duration-200 group
+              font-mono text-sm transition-colors duration-200
               ${isActive(item.href) 
-                ? 'text-cyan-400' 
-                : 'text-gray-400 hover:text-cyan-400'
+                ? 'text-white' 
+                : 'text-gray-400 hover:text-gray-200'
               }
             `}
           >
-            <span class="relative z-10 flex items-center space-x-1">
-              <span class="opacity-50">{item.icon}</span>
-              <span>{item.label}</span>
-            </span>
-            {isActive(item.href) && (
-              <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-400"></div>
-            )}
-            <div class="absolute inset-0 bg-cyan-400/0 hover:bg-cyan-400/10 rounded transition-all duration-200"></div>
+            {item.label}
           </a>
         ))}
       </nav>
 
-      <!-- Terminal Prompt -->
-      <div class="hidden lg:flex items-center space-x-2 font-mono text-xs text-gray-500">
-        <span class="text-green-400">user@web</span>
-        <span class="text-gray-600">:</span>
-        <span class="text-blue-400">~/portfolio</span>
-        <span class="text-gray-600">$</span>
-        <span class="text-gray-400 animate-pulse">|</span>
-      </div>
-
       <!-- Mobile Menu Button -->
       <button 
         id="mobile-menu-button"
-        class="md:hidden relative w-10 h-10 flex items-center justify-center group"
+        class="md:hidden"
       >
+        <span class="sr-only">Open menu</span>
         <div class="space-y-1.5">
-          <span class="block w-6 h-0.5 bg-cyan-400 transition-all duration-200"></span>
-          <span class="block w-6 h-0.5 bg-cyan-400 transition-all duration-200"></span>
-          <span class="block w-6 h-0.5 bg-cyan-400 transition-all duration-200"></span>
+          <span class="block w-5 h-0.5 bg-gray-400"></span>
+          <span class="block w-5 h-0.5 bg-gray-400"></span>
+          <span class="block w-5 h-0.5 bg-gray-400"></span>
         </div>
       </button>
     </div>
   </div>
 
   <!-- Mobile Menu -->
-  <nav id="mobile-menu" class="hidden md:hidden border-t border-cyan-900/50 bg-black/95 backdrop-blur-md">
+  <nav id="mobile-menu" class="hidden md:hidden border-t border-gray-800 bg-black/95">
     <div class="px-4 py-4 space-y-1">
       {navItems.map((item) => (
         <a 
           href={item.href}
           class={`
-            block px-4 py-3 font-mono text-sm transition-all duration-200 rounded
+            block px-4 py-2 font-mono text-sm rounded transition-colors duration-200
             ${isActive(item.href) 
-              ? 'text-cyan-400 bg-cyan-400/10' 
-              : 'text-gray-400 hover:text-cyan-400 hover:bg-cyan-400/5'
+              ? 'text-white bg-gray-800' 
+              : 'text-gray-400 hover:text-gray-200 hover:bg-gray-900'
             }
           `}
         >
-          <span class="opacity-50 mr-2">{item.icon}</span>
           {item.label}
         </a>
       ))}
@@ -110,14 +86,3 @@ const isActive = (href: string) => {
     menu?.classList.toggle('hidden');
   });
 </script>
-
-<style>
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
-  
-  .animate-pulse {
-    animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-</style>

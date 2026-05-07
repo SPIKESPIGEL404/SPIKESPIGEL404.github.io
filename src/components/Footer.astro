@@ -1,176 +1,54 @@
 ---
 const currentYear = new Date().getFullYear();
-
-const socialLinks = [
-  { name: 'GitHub', url: 'https://github.com/kelsenliu', icon: 'gh', color: 'hover:text-purple-400' },
-  { name: 'Twitter', url: 'https://twitter.com/kelsenliu', icon: 'tw', color: 'hover:text-blue-400' },
-  { name: 'LinkedIn', url: 'https://linkedin.com/in/kelsenliu', icon: 'in', color: 'hover:text-blue-300' },
-  { name: 'Email', url: 'mailto:hello@kelsenliu.com', icon: '@', color: 'hover:text-green-400' },
-];
-
-const quickLinks = [
-  { name: 'Writing', href: '/writing' },
-  { name: 'Projects', href: '/projects' },
-  { name: 'About', href: '/about' },
-];
-
-const statusIndicator = Math.random() > 0.5 ? 'online' : 'building';
 ---
 
-<footer class="border-t border-cyan-900/30 bg-gradient-to-t from-black to-transparent">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12">
-    <!-- Terminal-style status bar -->
-    <div class="mb-8">
-      <div class="bg-black/50 border border-cyan-900/50 rounded-lg p-4 font-mono text-sm">
-        <div class="flex items-center justify-between mb-2">
-          <div class="flex items-center space-x-2">
-            <span class="text-green-400">$</span>
-            <span class="text-gray-400">whoami</span>
+<footer class="border-t border-gray-800 bg-black">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 py-8">
+    <!-- Simple status -->
+    <div class="mb-6">
+      <div class="terminal max-w-2xl">
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <div class="terminal-dot"></div>
+            <div class="terminal-dot"></div>
+            <div class="terminal-dot"></div>
           </div>
-          <div class="flex items-center space-x-2">
-            <div class={`w-2 h-2 rounded-full ${statusIndicator === 'online' ? 'bg-green-400 animate-pulse' : 'bg-yellow-400 animate-bounce'}`}></div>
-            <span class="text-gray-400 text-xs">
-              {statusIndicator === 'online' ? 'available for opportunities' : 'building something cool'}
-            </span>
-          </div>
+          <span class="text-gray-400 text-xs font-mono">status</span>
         </div>
-        <div class="text-cyan-400">
-          kelsen.liu <span class="text-gray-600">|</span> 
-          <span class="text-gray-400">fullstack developer & builder</span>
-        </div>
-        <div class="mt-2 text-xs text-gray-500">
-          Last updated: {new Date().toISOString().split('T')[0]} • Built with 💙 using Astro + Bun
+        <div class="text-sm font-mono text-gray-300">
+          <p><span class="text-gray-500">$</span> whoami</p>
+          <p class="ml-4">kelsen.liu</p>
+          <p class="mt-2"><span class="text-gray-500">$</span> echo "status"</p>
+          <p class="ml-4">building things • available for work</p>
         </div>
       </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <!-- Quick Links -->
-      <div>
-        <h3 class="text-cyan-400 font-mono text-sm mb-4 flex items-center">
-          <span class="text-gray-600 mr-2">./</span>
-          quick_links
-        </h3>
-        <ul class="space-y-2">
-          {quickLinks.map((link) => (
-            <li>
-              <a 
-                href={link.href}
-                class="text-gray-400 hover:text-cyan-400 transition-colors duration-200 text-sm font-mono group flex items-center"
-              >
-                <span class="text-gray-600 mr-2 group-hover:text-cyan-400 transition-colors">></span>
-                {link.name}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <!-- Connect -->
-      <div>
-        <h3 class="text-cyan-400 font-mono text-sm mb-4 flex items-center">
-          <span class="text-gray-600 mr-2">./</span>
-          connect
-        </h3>
-        <div class="grid grid-cols-2 gap-2">
-          {socialLinks.map((link) => (
-            <a
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              class={`
-                group flex items-center space-x-2 p-2 rounded border border-gray-800 
-                hover:border-cyan-500/50 transition-all duration-200 text-sm font-mono
-                text-gray-400 ${link.color}
-              `}
-            >
-              <span class="text-xs opacity-75">[{link.icon}]</span>
-              <span class="truncate">{link.name}</span>
-            </a>
-          ))}
-        </div>
-      </div>
-
-      <!-- System Info -->
-      <div>
-        <h3 class="text-cyan-400 font-mono text-sm mb-4 flex items-center">
-          <span class="text-gray-600 mr-2">./</span>
-          system_info
-        </h3>
-        <div class="space-y-1 text-xs font-mono">
-          <div class="flex justify-between text-gray-400">
-            <span>OS:</span>
-            <span class="text-cyan-400">WebOS v2.0</span>
-          </div>
-          <div class="flex justify-between text-gray-400">
-            <span>Shell:</span>
-            <span class="text-green-400">astro-bash</span>
-          </div>
-          <div class="flex justify-between text-gray-400">
-            <span>Runtime:</span>
-            <span class="text-purple-400">bun v1.0+</span>
-          </div>
-          <div class="flex justify-between text-gray-400">
-            <span>Uptime:</span>
-            <span class="text-yellow-400">∞ days</span>
-          </div>
-        </div>
-      </div>
+    <!-- Simple links -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 text-sm font-mono">
+      <a href="https://github.com/kelsenliu" target="_blank" rel="noopener noreferrer" 
+         class="text-gray-400 hover:text-white transition-colors">
+        GitHub
+      </a>
+      <a href="https://twitter.com/kelsenliu" target="_blank" rel="noopener noreferrer"
+         class="text-gray-400 hover:text-white transition-colors">
+        Twitter
+      </a>
+      <a href="mailto:hello@kelsenliu.com"
+         class="text-gray-400 hover:text-white transition-colors">
+        Email
+      </a>
+      <a href="https://github.com/SPIKESPIGEL404/SPIKESPIGEL404.github.io" target="_blank" rel="noopener noreferrer"
+         class="text-gray-400 hover:text-white transition-colors">
+        Source
+      </a>
     </div>
 
-    <!-- ASCII Art Divider -->
-    <div class="my-8">
-      <div class="font-mono text-xs text-gray-700 text-center select-none">
-        ┌─────────────────────────────────────────────────────────────────────┐<br>
-        │                   • • •   thanks for visiting   • • •               │<br>
-        └─────────────────────────────────────────────────────────────────────┘
-      </div>
-    </div>
-
-    <!-- Copyright & Build Info -->
-    <div class="flex flex-col sm:flex-row items-center justify-between pt-6 border-t border-gray-800/50">
-      <div class="text-gray-500 text-sm font-mono mb-2 sm:mb-0">
-        <span class="text-gray-600">©</span> {currentYear} 
-        <span class="text-gray-400">kelsen.liu</span>
-        <span class="text-gray-600 mx-2">|</span>
-        <span class="text-gray-600">MIT license</span>
-      </div>
-      
-      <div class="flex items-center space-x-4 text-xs font-mono text-gray-600">
-        <div class="flex items-center space-x-1">
-          <div class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></div>
-          <span>deployed to prod</span>
-        </div>
-        <span>•</span>
-        <a 
-          href="https://github.com/SPIKESPIGEL404/SPIKESPIGEL404.github.io" 
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-gray-500 hover:text-cyan-400 transition-colors"
-        >
-          view source
-        </a>
-      </div>
+    <!-- Copyright -->
+    <div class="pt-6 border-t border-gray-800">
+      <p class="text-gray-500 text-sm font-mono text-center">
+        © {currentYear} kelsen.liu • built with astro + bun
+      </p>
     </div>
   </div>
 </footer>
-
-<style>
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-  
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-25%); }
-  }
-  
-  .animate-pulse {
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-  
-  .animate-bounce {
-    animation: bounce 1s infinite;
-  }
-</style>

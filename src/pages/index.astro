@@ -19,22 +19,22 @@ const links = home?.links || [];
       <div class="terminal max-w-2xl mx-auto">
         <div class="terminal-header">
           <div class="terminal-dots">
-            <div class="terminal-dot red"></div>
-            <div class="terminal-dot yellow"></div>
-            <div class="terminal-dot green"></div>
+            <div class="terminal-dot"></div>
+            <div class="terminal-dot"></div>
+            <div class="terminal-dot"></div>
           </div>
           <span class="text-gray-400 text-xs font-mono">~/portfolio</span>
         </div>
         <div class="space-y-2 text-left">
-          <p class="text-green-400 font-mono text-sm">
+          <p class="text-gray-300 font-mono text-sm">
             <span class="text-gray-500">$</span> whoami
           </p>
-          <p class="text-cyan-400 font-mono text-lg ml-4">{name}</p>
-          <p class="text-green-400 font-mono text-sm mt-4">
+          <p class="text-white font-mono text-lg ml-4">{name}</p>
+          <p class="text-gray-300 font-mono text-sm mt-4">
             <span class="text-gray-500">$</span> echo $ROLE
           </p>
-          <p class="text-purple-400 font-mono ml-4">{tagline}</p>
-          <p class="text-green-400 font-mono text-sm mt-4">
+          <p class="text-gray-100 font-mono ml-4">{tagline}</p>
+          <p class="text-gray-300 font-mono text-sm mt-4">
             <span class="text-gray-500">$</span> cat bio.txt
           </p>
           {home?.bio && (
@@ -43,35 +43,32 @@ const links = home?.links || [];
             </p>
           )}
           <div class="flex items-center mt-4">
-            <span class="text-green-400 font-mono text-sm">$</span>
-            <span class="text-cyan-400 font-mono text-sm ml-1 terminal-cursor">connect</span>
+            <span class="text-gray-300 font-mono text-sm">$</span>
+            <span class="text-white font-mono text-sm ml-1 terminal-cursor">connect</span>
           </div>
         </div>
       </div>
 
-      <!-- Glitch effect title -->
+      <!-- Simple title -->
       <div class="relative">
-        <h1 
-          class="glitch text-6xl md:text-8xl font-bold text-cyan-400 font-mono select-none"
-          data-text={name}
-        >
+        <h1 class="text-6xl md:text-8xl font-bold text-white font-mono select-none">
           {name}
         </h1>
         <p class="text-xl md:text-2xl text-gray-400 font-mono mt-4">
           <span class="text-gray-600">></span> {tagline}
-          <span class="animate-pulse text-cyan-400">_</span>
+          <span class="animate-pulse text-white">_</span>
         </p>
       </div>
 
       <!-- Status indicator -->
       <div class="flex items-center justify-center space-x-4 text-sm font-mono">
-        <div class="flex items-center space-x-2 cyber-card px-4 py-2">
-          <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-          <span class="text-green-400">online</span>
+        <div class="flex items-center space-x-2 card px-4 py-2">
+          <div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+          <span class="text-white">online</span>
         </div>
-        <div class="flex items-center space-x-2 cyber-card px-4 py-2">
-          <div class="w-2 h-2 bg-cyan-400 rounded-full"></div>
-          <span class="text-cyan-400">available for work</span>
+        <div class="flex items-center space-x-2 card px-4 py-2">
+          <div class="w-2 h-2 bg-gray-400 rounded-full"></div>
+          <span class="text-gray-400">available for work</span>
         </div>
       </div>
     </div>
@@ -80,9 +77,9 @@ const links = home?.links || [];
   <!-- Quick Links Section -->
   <section class="py-16">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-2xl font-bold text-cyan-400 font-mono mb-8 flex items-center">
+      <h2 class="text-2xl font-bold text-white font-mono mb-8 flex items-center">
         <span class="text-gray-600 mr-2">$</span>
-        <span class="text-green-400">ls</span>
+        <span class="text-gray-300">ls</span>
         <span class="ml-2">-la</span>
         <span class="ml-4 text-gray-500"># explore my work</span>
       </h2>
@@ -93,13 +90,13 @@ const links = home?.links || [];
             href={link.url}
             target={link.url?.startsWith('http') ? '_blank' : undefined}
             rel={link.url?.startsWith('http') ? 'noopener noreferrer' : undefined}
-            class="cyber-card group glow-cyan"
+            class="card group"
           >
             <div class="flex items-center justify-between mb-3">
-              <h3 class="text-cyan-400 font-mono font-semibold group-hover:text-white transition-colors">
+              <h3 class="text-white font-mono font-semibold transition-colors">
                 {link.label}
               </h3>
-              <span class="text-gray-600 group-hover:text-cyan-400 transition-colors">
+              <span class="text-gray-600 group-hover:text-white transition-colors">
                 →
               </span>
             </div>
@@ -118,25 +115,25 @@ const links = home?.links || [];
       <div class="terminal">
         <div class="terminal-header">
           <div class="terminal-dots">
-            <div class="terminal-dot red"></div>
-            <div class="terminal-dot yellow"></div>
-            <div class="terminal-dot green"></div>
+            <div class="terminal-dot"></div>
+            <div class="terminal-dot"></div>
+            <div class="terminal-dot"></div>
           </div>
           <span class="text-gray-400 text-xs font-mono">tech-stack.sh</span>
         </div>
         <div class="space-y-1 text-sm">
-          <p class="text-green-400">
+          <p class="text-gray-300">
             <span class="text-gray-500">$</span> grep -r "favorite_tech" ~/.config/
           </p>
           <div class="ml-4 space-y-1 text-gray-300">
-            <p><span class="text-cyan-400">languages:</span> Rust, TypeScript, Python, Go</p>
-            <p><span class="text-purple-400">frameworks:</span> Astro, Next.js, SvelteKit, Axum</p>
-            <p><span class="text-yellow-400">tools:</span> Bun, Docker, k8s, GitHub Actions</p>
-            <p><span class="text-green-400">databases:</span> PostgreSQL, Redis, MongoDB</p>
-            <p><span class="text-blue-400">cloud:</span> AWS, Vercel, Railway, Fly.io</p>
+            <p><span class="text-white">languages:</span> Rust, TypeScript, Python, Go</p>
+            <p><span class="text-gray-100">frameworks:</span> Astro, Next.js, SvelteKit, Axum</p>
+            <p><span class="text-gray-200">tools:</span> Bun, Docker, k8s, GitHub Actions</p>
+            <p><span class="text-gray-300">databases:</span> PostgreSQL, Redis, MongoDB</p>
+            <p><span class="text-gray-400">cloud:</span> AWS, Vercel, Railway, Fly.io</p>
           </div>
           <div class="flex items-center mt-4">
-            <span class="text-green-400">$</span>
+            <span class="text-gray-300">$</span>
             <span class="text-gray-400 ml-1 animate-pulse">|</span>
           </div>
         </div>
