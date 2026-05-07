@@ -15,49 +15,19 @@ const links = home?.links || [];
   <!-- Hero Section -->
   <section class="min-h-[80vh] flex items-center justify-center relative">
     <div class="max-w-4xl mx-auto text-center space-y-8">
-      <!-- Terminal-style greeting -->
-      <div class="terminal max-w-2xl mx-auto">
-        <div class="terminal-header">
-          <div class="terminal-dots">
-            <div class="terminal-dot"></div>
-            <div class="terminal-dot"></div>
-            <div class="terminal-dot"></div>
-          </div>
-          <span class="text-gray-400 text-xs font-mono">~/portfolio</span>
-        </div>
-        <div class="space-y-2 text-left">
-          <p class="text-gray-300 font-mono text-sm">
-            <span class="text-gray-500">$</span> whoami
-          </p>
-          <p class="text-white font-mono text-lg ml-4">{name}</p>
-          <p class="text-gray-300 font-mono text-sm mt-4">
-            <span class="text-gray-500">$</span> echo $ROLE
-          </p>
-          <p class="text-gray-100 font-mono ml-4">{tagline}</p>
-          <p class="text-gray-300 font-mono text-sm mt-4">
-            <span class="text-gray-500">$</span> cat bio.txt
-          </p>
-          {home?.bio && (
-            <p class="text-gray-300 font-mono text-sm ml-4 leading-relaxed">
-              {home.bio}
-            </p>
-          )}
-          <div class="flex items-center mt-4">
-            <span class="text-gray-300 font-mono text-sm">$</span>
-            <span class="text-white font-mono text-sm ml-1 terminal-cursor">connect</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Simple title -->
-      <div class="relative">
-        <h1 class="text-6xl md:text-8xl font-bold text-white font-mono select-none">
+      <!-- Main title -->
+      <div class="space-y-4">
+        <h1 class="text-6xl md:text-8xl font-bold text-white font-mono">
           {name}
         </h1>
-        <p class="text-xl md:text-2xl text-gray-400 font-mono mt-4">
-          <span class="text-gray-600">></span> {tagline}
-          <span class="animate-pulse text-white">_</span>
+        <p class="text-xl md:text-2xl text-gray-400 font-mono">
+          {tagline}
         </p>
+        {home?.bio && (
+          <p class="text-gray-300 font-sans text-lg max-w-2xl mx-auto mt-6">
+            {home.bio}
+          </p>
+        )}
       </div>
 
       <!-- Status indicator -->
@@ -77,11 +47,8 @@ const links = home?.links || [];
   <!-- Quick Links Section -->
   <section class="py-16">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-2xl font-bold text-white font-mono mb-8 flex items-center">
-        <span class="text-gray-600 mr-2">$</span>
-        <span class="text-gray-300">ls</span>
-        <span class="ml-2">-la</span>
-        <span class="ml-4 text-gray-500"># explore my work</span>
+      <h2 class="text-2xl font-bold text-white font-mono mb-8">
+        Explore My Work
       </h2>
       
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -96,13 +63,15 @@ const links = home?.links || [];
               <h3 class="text-white font-mono font-semibold transition-colors">
                 {link.label}
               </h3>
-              <span class="text-gray-600 group-hover:text-white transition-colors">
+              <span class="text-gray-600 group-hover:text-white transition-colors text-2xl">
                 →
               </span>
             </div>
-            <p class="text-gray-400 text-sm font-mono">
-              ./{link.label.toLowerCase().replace(' ', '-')}
-            </p>
+            {link.url?.startsWith('http') && (
+              <p class="text-gray-400 text-sm">
+                External Link
+              </p>
+            )}
           </a>
         ))}
       </div>
@@ -112,30 +81,29 @@ const links = home?.links || [];
   <!-- Skills/Tech Stack -->
   <section class="py-16">
     <div class="max-w-4xl mx-auto">
-      <div class="terminal">
-        <div class="terminal-header">
-          <div class="terminal-dots">
-            <div class="terminal-dot"></div>
-            <div class="terminal-dot"></div>
-            <div class="terminal-dot"></div>
-          </div>
-          <span class="text-gray-400 text-xs font-mono">tech-stack.sh</span>
+      <h2 class="text-2xl font-bold text-white font-mono mb-8 text-center">
+        Tech Stack
+      </h2>
+      <div class="grid md:grid-cols-2 gap-8 text-gray-300">
+        <div>
+          <h3 class="text-white font-mono text-lg mb-3">Languages</h3>
+          <p class="font-mono text-sm">Rust, TypeScript, Python, Go</p>
         </div>
-        <div class="space-y-1 text-sm">
-          <p class="text-gray-300">
-            <span class="text-gray-500">$</span> grep -r "favorite_tech" ~/.config/
-          </p>
-          <div class="ml-4 space-y-1 text-gray-300">
-            <p><span class="text-white">languages:</span> Rust, TypeScript, Python, Go</p>
-            <p><span class="text-gray-100">frameworks:</span> Astro, Next.js, SvelteKit, Axum</p>
-            <p><span class="text-gray-200">tools:</span> Bun, Docker, k8s, GitHub Actions</p>
-            <p><span class="text-gray-300">databases:</span> PostgreSQL, Redis, MongoDB</p>
-            <p><span class="text-gray-400">cloud:</span> AWS, Vercel, Railway, Fly.io</p>
-          </div>
-          <div class="flex items-center mt-4">
-            <span class="text-gray-300">$</span>
-            <span class="text-gray-400 ml-1 animate-pulse">|</span>
-          </div>
+        <div>
+          <h3 class="text-white font-mono text-lg mb-3">Frameworks</h3>
+          <p class="font-mono text-sm">Astro, Next.js, SvelteKit, Axum</p>
+        </div>
+        <div>
+          <h3 class="text-white font-mono text-lg mb-3">Tools</h3>
+          <p class="font-mono text-sm">Bun, Docker, k8s, GitHub Actions</p>
+        </div>
+        <div>
+          <h3 class="text-white font-mono text-lg mb-3">Databases</h3>
+          <p class="font-mono text-sm">PostgreSQL, Redis, MongoDB</p>
+        </div>
+        <div>
+          <h3 class="text-white font-mono text-lg mb-3">Cloud</h3>
+          <p class="font-mono text-sm">AWS, Vercel, Railway, Fly.io</p>
         </div>
       </div>
     </div>

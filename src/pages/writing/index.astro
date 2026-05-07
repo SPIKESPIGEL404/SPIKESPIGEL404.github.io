@@ -17,10 +17,10 @@ const publishedPosts = posts
 
 <BaseLayout title="Writing - Kelsen Liu">
   <div class="space-y-8">
-    <h1 class="text-2xl font-bold">Writing</h1>
+    <h1 class="text-5xl md:text-6xl font-bold text-white font-mono text-center mb-8">Writing</h1>
     
     {publishedPosts.length === 0 ? (
-      <p class="text-zinc-500">No posts yet.</p>
+      <p class="text-gray-400 font-mono text-center">No posts yet.</p>
     ) : (
       <div class="space-y-6">
         {publishedPosts.map((post) => {
@@ -33,13 +33,13 @@ const publishedPosts = posts
           return (
             <article>
               <a href={`/writing/${post.slug}`} class="block group">
-                <h2 class="text-lg font-semibold mb-1 group-hover:underline">
+                <h2 class="text-xl font-mono font-semibold mb-2 text-white group-hover:text-gray-300 transition-colors">
                   {post.entry.title}
                 </h2>
-                <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-1">
+                <p class="text-gray-400 mb-2">
                   {post.entry.description}
                 </p>
-                <time class="text-sm text-zinc-500">{date}</time>
+                <time class="text-sm text-gray-500 font-mono">{date}</time>
               </a>
             </article>
           );
