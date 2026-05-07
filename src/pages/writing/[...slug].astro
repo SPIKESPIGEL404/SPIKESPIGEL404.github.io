@@ -1,28 +1,23 @@
 ---
+import { getCollection, render } from 'astro:content';
 import PostLayout from '../../layouts/PostLayout.astro';
-import { createReader } from '@keystatic/core/reader';
-import keystaticConfig from '../../../keystatic.config';
 
 export async function getStaticPaths() {
-  const reader = createReader(process.cwd(), keystaticConfig);
-  const posts = await reader.collections.posts.all();
-  
-  return posts
-    .filter(post => !post.entry.draft)
-    .map(post => ({
-      params: { slug: post.slug },
-      props: { post }
-    }));
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
 }
 
 const { post } = Astro.props;
-const content = await post.entry.content();
+const { Content } = await render(post);
 ---
 
-<PostLayout 
-  title={post.entry.title} 
-  date={post.entry.date}
-  description={post.entry.description}
+<PostLayout
+  title={post.data.title}
+  date={post.data.date}
+  description={post.data.description}
 >
-  <Fragment set:html={content} />
+  <Content />
 </PostLayout>

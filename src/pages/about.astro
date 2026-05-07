@@ -1,27 +1,29 @@
 ---
+import { getEntry, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { createReader } from '@keystatic/core/reader';
-import keystaticConfig from '../../keystatic.config';
-import { marked } from 'marked';
 
-const reader = createReader(process.cwd(), keystaticConfig);
-const about = await reader.singletons.about.read();
-
-const title = about?.title || 'About';
-// Markdoc fields are functions when format is json
-const contentHtml = about?.content ? await about.content() : null;
+const about = await getEntry('pages', 'about');
+const title = about?.data.title || 'About';
+const { Content } = about ? await render(about) : { Content: null };
 ---
 
 <BaseLayout title={`${title} - Kelsen Liu`}>
-  <div class="max-w-4xl mx-auto space-y-8">
-    <h1 class="text-5xl md:text-6xl font-bold text-white font-mono text-center mb-8">{title}</h1>
-    
-    {contentHtml ? (
-      <div class="prose prose-invert max-w-none">
-        <Fragment set:html={contentHtml} />
-      </div>
-    ) : (
-      <p class="text-gray-400 font-mono text-center">Content coming soon.</p>
-    )}
-  </div>
+  <section class="pt-8 pb-12">
+    <h1 class="font-mono font-bold leading-[0.95] tracking-tight" style="color:var(--ink);font-size:clamp(3rem,9vw,7rem)">
+      {title}
+    </h1>
+  </section>
+
+  <section>
+    <span class="section-label">/ BIO</span>
+    <div class="mt-6 max-w-3xl">
+      {Content ? (
+        <div class="prose max-w-none">
+          <Content />
+        </div>
+      ) : (
+        <p class="font-mono text-sm" style="color:var(--muted)">Content coming soon.</p>
+      )}
+    </div>
+  </section>
 </BaseLayout>

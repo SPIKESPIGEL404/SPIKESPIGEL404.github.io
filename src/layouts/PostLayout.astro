@@ -16,20 +16,29 @@ const formattedDate = new Date(date).toLocaleDateString('en-US', {
 ---
 
 <BaseLayout title={title} description={description}>
-  <article>
-    <header class="mb-8">
-      <h1 class="text-3xl font-bold mb-2">{title}</h1>
-      <time class="text-sm text-zinc-500">{formattedDate}</time>
+  <article class="max-w-3xl pt-8">
+    <header class="mb-10">
+      <span class="section-label">/ POST</span>
+      <h1 class="mt-6 font-mono font-bold leading-tight" style="color:var(--ink);font-size:clamp(2rem,5vw,3.5rem)">
+        {title}
+      </h1>
+      <time class="mt-4 inline-block font-mono text-xs uppercase tracking-wider" style="color:var(--muted)">
+        {formattedDate}
+      </time>
     </header>
-    
-    <div class="prose prose-zinc dark:prose-invert max-w-none">
+
+    <div class="prose max-w-none">
       <slot />
     </div>
-    
-    <div class="mt-12">
-      <a href="/writing" class="text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:underline">
-        ← Back to writing
+
+    <div class="mt-16 pt-6" style="border-top:1px solid var(--rule)">
+      <a href="/writing" class="font-mono text-sm uppercase tracking-wider" style="color:var(--muted)">
+        ← BACK TO WRITING
       </a>
     </div>
   </article>
 </BaseLayout>
+
+<style>
+  article a:hover { color: var(--ink) !important; }
+</style>

@@ -19,86 +19,33 @@ const { title, description = 'Personal website of Kelsen Liu - Fullstack develop
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
-    
-    <!-- SEO Meta Tags -->
+
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <meta name="keywords" content="developer, fullstack, rust, typescript, web development, software engineer" />
     <meta name="author" content="Kelsen Liu" />
-    
-    <!-- Open Graph / Facebook -->
+
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    
-    <!-- Twitter -->
+
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={Astro.url} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
-    
+
     <title>{title}</title>
   </head>
   <body class="min-h-screen flex flex-col">
-    <!-- Matrix rain background effect (subtle) -->
-    <div id="matrix-bg" class="fixed inset-0 pointer-events-none opacity-5 z-0"></div>
-    
-    <!-- Header -->
     <Header />
-    
-    <!-- Main Content -->
+
     <main class="flex-1 pt-20 pb-8">
       <div class="max-w-6xl mx-auto px-4 sm:px-6">
         <slot />
       </div>
     </main>
-    
-    <!-- Footer -->
-    <Footer />
 
-    <!-- Background particles effect -->
-    <script>
-      // Simple particle effect for the background
-      const createParticle = () => {
-        const particle = document.createElement('div');
-        particle.className = 'absolute w-1 h-1 bg-cyan-400 rounded-full opacity-20';
-        particle.style.left = Math.random() * 100 + 'vw';
-        particle.style.top = '-10px';
-        particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
-        particle.style.animationName = 'float-up';
-        document.body.appendChild(particle);
-        
-        setTimeout(() => {
-          particle.remove();
-        }, 5000);
-      };
-      
-      // Create particles occasionally
-      setInterval(createParticle, 2000);
-      
-      // Add floating animation
-      const style = document.createElement('style');
-      style.textContent = `
-        @keyframes float-up {
-          from {
-            transform: translateY(100vh) scale(0);
-            opacity: 0;
-          }
-          10% {
-            opacity: 0.2;
-          }
-          90% {
-            opacity: 0.2;
-          }
-          to {
-            transform: translateY(-10vh) scale(1);
-            opacity: 0;
-          }
-        }
-      `;
-      document.head.appendChild(style);
-    </script>
+    <Footer />
   </body>
 </html>

@@ -2,40 +2,39 @@
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="border-t border-gray-800 bg-black">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 py-8">
-    <!-- Simple status -->
-    <div class="mb-8">
-      <p class="text-gray-300 font-mono text-sm text-center">
-        Building things • Available for work
-      </p>
-    </div>
-
-    <!-- Simple links -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 text-sm font-mono">
-      <a href="https://github.com/kelsenliu" target="_blank" rel="noopener noreferrer" 
-         class="text-gray-400 hover:text-white transition-colors">
-        GitHub
+<footer style="border-top:1px solid var(--rule);background:#f5f4ee">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm font-mono mb-8">
+      <a href="https://github.com/kelsenliu" target="_blank" rel="noopener noreferrer" class="footer-link">
+        <span class="nav-key">[G]</span>GITHUB
       </a>
-      <a href="https://twitter.com/kelsenliu" target="_blank" rel="noopener noreferrer"
-         class="text-gray-400 hover:text-white transition-colors">
-        Twitter
+      <a href="https://twitter.com/kelsenliu" target="_blank" rel="noopener noreferrer" class="footer-link">
+        <span class="nav-key">[T]</span>TWITTER
       </a>
-      <a href="mailto:hello@kelsenliu.com"
-         class="text-gray-400 hover:text-white transition-colors">
-        Email
+      <a href="mailto:hello@kelsenliu.com" class="footer-link">
+        <span class="nav-key">[E]</span>EMAIL
       </a>
-      <a href="https://github.com/SPIKESPIGEL404/SPIKESPIGEL404.github.io" target="_blank" rel="noopener noreferrer"
-         class="text-gray-400 hover:text-white transition-colors">
-        Source
+      <a href="https://github.com/SPIKESPIGEL404/SPIKESPIGEL404.github.io" target="_blank" rel="noopener noreferrer" class="footer-link">
+        <span class="nav-key">[S]</span>SOURCE
       </a>
     </div>
 
-    <!-- Copyright -->
-    <div class="pt-6 border-t border-gray-800">
-      <p class="text-gray-500 text-sm font-mono text-center">
-        © {currentYear} kelsen.liu • built with astro + bun
+    <div class="pt-6" style="border-top:1px solid var(--rule)">
+      <p class="text-xs font-mono tracking-wider" style="color:var(--muted)">
+        © {currentYear} KELSEN.LIU — BUILT WITH ASTRO + BUN
       </p>
     </div>
   </div>
 </footer>
+
+<style>
+  .footer-link {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+    letter-spacing: 0.05em;
+  }
+  .footer-link:hover {
+    color: var(--ink);
+  }
+</style>

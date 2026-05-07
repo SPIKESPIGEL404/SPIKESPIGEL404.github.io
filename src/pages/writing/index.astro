@@ -1,50 +1,62 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { createReader } from '@keystatic/core/reader';
-import keystaticConfig from '../../../keystatic.config';
 
-const reader = createReader(process.cwd(), keystaticConfig);
-const posts = await reader.collections.posts.all();
-
-const publishedPosts = posts
-  .filter(post => !post.entry.draft)
-  .sort((a, b) => {
-    const dateA = new Date(a.entry.date).getTime();
-    const dateB = new Date(b.entry.date).getTime();
-    return dateB - dateA;
-  });
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
 ---
 
 <BaseLayout title="Writing - Kelsen Liu">
-  <div class="space-y-8">
-    <h1 class="text-5xl md:text-6xl font-bold text-white font-mono text-center mb-8">Writing</h1>
-    
-    {publishedPosts.length === 0 ? (
-      <p class="text-gray-400 font-mono text-center">No posts yet.</p>
-    ) : (
-      <div class="space-y-6">
-        {publishedPosts.map((post) => {
-          const date = new Date(post.entry.date).toLocaleDateString('en-US', {
+  <section class="pt-8 pb-12">
+    <h1 class="font-mono font-bold leading-[0.95] tracking-tight" style="color:var(--ink);font-size:clamp(3rem,9vw,7rem)">
+      Writing
+    </h1>
+    <p class="mt-4 font-mono text-sm uppercase tracking-wider" style="color:var(--muted)">
+      {posts.length} {posts.length === 1 ? 'POST' : 'POSTS'}
+    </p>
+  </section>
+
+  {posts.length === 0 ? (
+    <p class="font-mono text-sm" style="color:var(--muted)">No posts yet.</p>
+  ) : (
+    <section>
+      <span class="section-label">/ ALL POSTS</span>
+      <div class="mt-6 divide-y" style="border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)">
+        {posts.map((post) => {
+          const date = post.data.date.toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
-            day: 'numeric'
+            day: 'numeric',
           });
-          
+
           return (
-            <article>
-              <a href={`/writing/${post.slug}`} class="block group">
-                <h2 class="text-xl font-mono font-semibold mb-2 text-white group-hover:text-gray-300 transition-colors">
-                  {post.entry.title}
-                </h2>
-                <p class="text-gray-400 mb-2">
-                  {post.entry.description}
-                </p>
-                <time class="text-sm text-gray-500 font-mono">{date}</time>
+            <article style="border-bottom:1px solid var(--rule)">
+              <a href={`/writing/${post.id}`} class="block py-6 group" style="transition:background-color 0.15s ease"
+                 onmouseover="this.style.background='#ecebe2'"
+                 onmouseout="this.style.background='transparent'">
+                <div class="flex flex-col md:flex-row md:items-baseline md:gap-8 px-4">
+                  <time class="font-mono text-xs uppercase tracking-wider md:w-32 md:flex-shrink-0 mb-1 md:mb-0" style="color:var(--muted)">
+                    {date}
+                  </time>
+                  <div class="flex-1">
+                    <h2 class="text-xl font-mono font-semibold mb-1" style="color:var(--ink)">
+                      {post.data.title}
+                    </h2>
+                    <p class="text-sm" style="color:var(--ink)">
+                      {post.data.description}
+                    </p>
+                  </div>
+                  <span class="hidden md:inline font-mono text-xl" style="color:var(--ink)">→</span>
+                </div>
               </a>
             </article>
           );
         })}
       </div>
-    )}
-  </div>
+    </section>
+  )}
 </BaseLayout>
+<style>
+  .divide-y > article:last-child { border-bottom: none !important; }
+</style>

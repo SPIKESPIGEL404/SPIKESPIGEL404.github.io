@@ -1,110 +1,106 @@
 ---
+import { getEntry, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { createReader } from '@keystatic/core/reader';
-import keystaticConfig from '../../keystatic.config';
 
-const reader = createReader(process.cwd(), keystaticConfig);
-const home = await reader.singletons.home.read();
+const home = await getEntry('pages', 'home');
+const data = home?.data ?? {};
 
-const name = home?.name || 'Kelsen Liu';
-const tagline = home?.tagline || 'Building things on the internet';
-const links = home?.links || [];
+const name = data.name || 'Kelsen Liu';
+const tagline = data.tagline || 'Building things on the internet';
+const bio = data.bio || '';
+const links = data.links || [];
+
+const hasBody = !!home?.body?.trim();
+const { Content: Body } = hasBody ? await render(home!) : { Content: null };
 ---
 
 <BaseLayout title={name}>
-  <!-- Hero Section -->
-  <section class="min-h-[80vh] flex items-center justify-center relative">
-    <div class="max-w-4xl mx-auto text-center space-y-8">
-      <!-- Main title -->
-      <div class="space-y-4">
-        <h1 class="text-6xl md:text-8xl font-bold text-white font-mono">
-          {name}
-        </h1>
-        <p class="text-xl md:text-2xl text-gray-400 font-mono">
-          {tagline}
-        </p>
-        {home?.bio && (
-          <p class="text-gray-300 font-sans text-lg max-w-2xl mx-auto mt-6">
-            {home.bio}
-          </p>
-        )}
-      </div>
+  <!-- Hero -->
+  <section class="pt-8 pb-16">
+    <h1 class="font-mono font-bold leading-[0.95] tracking-tight" style="color:var(--ink);font-size:clamp(3.5rem,11vw,9rem)">
+      {name}
+    </h1>
+    <p class="mt-6 text-xl md:text-2xl max-w-3xl" style="color:var(--ink)">
+      {tagline}
+    </p>
+    {bio && (
+      <p class="mt-4 max-w-2xl text-base md:text-lg" style="color:var(--muted)">
+        {bio}
+      </p>
+    )}
 
-      <!-- Status indicator -->
-      <div class="flex items-center justify-center space-x-4 text-sm font-mono">
-        <div class="flex items-center space-x-2 card px-4 py-2">
-          <div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-          <span class="text-white">online</span>
-        </div>
-        <div class="flex items-center space-x-2 card px-4 py-2">
-          <div class="w-2 h-2 bg-gray-400 rounded-full"></div>
-          <span class="text-gray-400">available for work</span>
-        </div>
-      </div>
+    <!-- Status row -->
+    <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-xs uppercase tracking-wider" style="color:var(--muted)">
+      <span class="flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full animate-pulse" style="background:var(--ink)"></span>
+        ONLINE
+      </span>
+      <span>AVAILABLE FOR WORK</span>
+      <span class="hidden md:inline">PRESS [W] [P] [A] TO NAVIGATE</span>
     </div>
   </section>
 
-  <!-- Quick Links Section -->
-  <section class="py-16">
-    <div class="max-w-4xl mx-auto">
-      <h2 class="text-2xl font-bold text-white font-mono mb-8">
-        Explore My Work
-      </h2>
-      
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <!-- Body content (optional, fills in when authored via Keystatic admin) -->
+  {Body && (
+    <section class="py-12">
+      <span class="section-label">/ NOTES</span>
+      <div class="mt-6 prose max-w-3xl">
+        <Body />
+      </div>
+    </section>
+  )}
+
+  <!-- Explore -->
+  {links.length > 0 && (
+    <section class="py-12">
+      <span class="section-label">/ EXPLORE</span>
+      <div class="mt-6 grid md:grid-cols-2 lg:grid-cols-3 gap-0" style="border-left:1px solid var(--rule);border-top:1px solid var(--rule)">
         {links.map((link) => (
-          <a 
+          <a
             href={link.url}
             target={link.url?.startsWith('http') ? '_blank' : undefined}
             rel={link.url?.startsWith('http') ? 'noopener noreferrer' : undefined}
-            class="card group"
+            class="group p-6 flex flex-col justify-between min-h-[140px]"
+            style="border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);transition:background-color 0.15s ease"
+            onmouseover="this.style.background='#ecebe2'"
+            onmouseout="this.style.background='transparent'"
           >
-            <div class="flex items-center justify-between mb-3">
-              <h3 class="text-white font-mono font-semibold transition-colors">
-                {link.label}
-              </h3>
-              <span class="text-gray-600 group-hover:text-white transition-colors text-2xl">
-                →
+            <h3 class="font-mono text-base font-semibold" style="color:var(--ink)">{link.label}</h3>
+            <div class="flex items-center justify-between mt-6">
+              <span class="font-mono text-xs uppercase tracking-wider" style="color:var(--muted)">
+                {link.url?.startsWith('http') ? 'EXTERNAL' : 'INTERNAL'}
               </span>
+              <span class="font-mono text-xl" style="color:var(--ink)">→</span>
             </div>
-            {link.url?.startsWith('http') && (
-              <p class="text-gray-400 text-sm">
-                External Link
-              </p>
-            )}
           </a>
         ))}
       </div>
-    </div>
-  </section>
+    </section>
+  )}
 
-  <!-- Skills/Tech Stack -->
-  <section class="py-16">
-    <div class="max-w-4xl mx-auto">
-      <h2 class="text-2xl font-bold text-white font-mono mb-8 text-center">
-        Tech Stack
-      </h2>
-      <div class="grid md:grid-cols-2 gap-8 text-gray-300">
-        <div>
-          <h3 class="text-white font-mono text-lg mb-3">Languages</h3>
-          <p class="font-mono text-sm">Rust, TypeScript, Python, Go</p>
-        </div>
-        <div>
-          <h3 class="text-white font-mono text-lg mb-3">Frameworks</h3>
-          <p class="font-mono text-sm">Astro, Next.js, SvelteKit, Axum</p>
-        </div>
-        <div>
-          <h3 class="text-white font-mono text-lg mb-3">Tools</h3>
-          <p class="font-mono text-sm">Bun, Docker, k8s, GitHub Actions</p>
-        </div>
-        <div>
-          <h3 class="text-white font-mono text-lg mb-3">Databases</h3>
-          <p class="font-mono text-sm">PostgreSQL, Redis, MongoDB</p>
-        </div>
-        <div>
-          <h3 class="text-white font-mono text-lg mb-3">Cloud</h3>
-          <p class="font-mono text-sm">AWS, Vercel, Railway, Fly.io</p>
-        </div>
+  <!-- Tech Stack -->
+  <section class="py-12">
+    <span class="section-label">/ TECH STACK</span>
+    <div class="mt-6 grid md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-6">
+      <div>
+        <h3 class="font-mono text-xs uppercase tracking-wider mb-2" style="color:var(--muted)">LANGUAGES</h3>
+        <p class="font-mono text-sm" style="color:var(--ink)">Rust · TypeScript · Python · Go</p>
+      </div>
+      <div>
+        <h3 class="font-mono text-xs uppercase tracking-wider mb-2" style="color:var(--muted)">FRAMEWORKS</h3>
+        <p class="font-mono text-sm" style="color:var(--ink)">Astro · Next.js · SvelteKit · Axum</p>
+      </div>
+      <div>
+        <h3 class="font-mono text-xs uppercase tracking-wider mb-2" style="color:var(--muted)">TOOLS</h3>
+        <p class="font-mono text-sm" style="color:var(--ink)">Bun · Docker · k8s · GitHub Actions</p>
+      </div>
+      <div>
+        <h3 class="font-mono text-xs uppercase tracking-wider mb-2" style="color:var(--muted)">DATABASES</h3>
+        <p class="font-mono text-sm" style="color:var(--ink)">PostgreSQL · Redis · MongoDB</p>
+      </div>
+      <div>
+        <h3 class="font-mono text-xs uppercase tracking-wider mb-2" style="color:var(--muted)">CLOUD</h3>
+        <p class="font-mono text-sm" style="color:var(--ink)">AWS · Vercel · Railway · Fly.io</p>
       </div>
     </div>
   </section>

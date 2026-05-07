@@ -2,10 +2,10 @@
 const currentPath = Astro.url.pathname;
 
 const navItems = [
-  { label: 'Home', href: '/' },
-  { label: 'Writing', href: '/writing' },
-  { label: 'Projects', href: '/projects' },
-  { label: 'About', href: '/about' },
+  { key: 'H', label: 'HOME', href: '/' },
+  { key: 'W', label: 'WRITING', href: '/writing' },
+  { key: 'P', label: 'PROJECTS', href: '/projects' },
+  { key: 'A', label: 'ABOUT', href: '/about' },
 ];
 
 const isActive = (href: string) => {
@@ -14,73 +14,84 @@ const isActive = (href: string) => {
 };
 ---
 
-<header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-black/90 border-b border-gray-800">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6">
+<header class="fixed top-0 left-0 right-0 z-50" style="background:#f5f4ee;border-bottom:1px solid var(--rule)">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
     <div class="flex items-center justify-between h-16">
-      <!-- Logo -->
-      <a href="/" class="font-mono text-lg font-bold">
-        <span class="text-white">KELSEN</span>
+      <!-- Brand -->
+      <a href="/" class="font-mono text-sm font-bold tracking-wider" style="color:var(--ink)">
+        KELSEN.LIU
       </a>
 
-      <!-- Navigation -->
-      <nav class="hidden md:flex items-center space-x-8">
+      <!-- Desktop nav -->
+      <nav class="hidden md:flex items-center gap-6">
         {navItems.map((item) => (
-          <a 
+          <a
             href={item.href}
-            class={`
-              font-mono text-sm transition-colors duration-200
-              ${isActive(item.href) 
-                ? 'text-white' 
-                : 'text-gray-400 hover:text-gray-200'
-              }
-            `}
+            data-nav-key={item.key.toLowerCase()}
+            class={`font-mono text-sm tracking-wider transition-colors ${isActive(item.href) ? 'is-active' : ''}`}
+            style={isActive(item.href) ? 'color:var(--ink)' : 'color:var(--muted)'}
           >
-            {item.label}
+            <span class="nav-key">[{item.key}]</span>{item.label}
           </a>
         ))}
       </nav>
 
-      <!-- Mobile Menu Button -->
-      <button 
-        id="mobile-menu-button"
-        class="md:hidden"
-      >
-        <span class="sr-only">Open menu</span>
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-button" class="md:hidden" aria-label="Open menu">
         <div class="space-y-1.5">
-          <span class="block w-5 h-0.5 bg-gray-400"></span>
-          <span class="block w-5 h-0.5 bg-gray-400"></span>
-          <span class="block w-5 h-0.5 bg-gray-400"></span>
+          <span class="block w-5 h-px" style="background:var(--ink)"></span>
+          <span class="block w-5 h-px" style="background:var(--ink)"></span>
+          <span class="block w-5 h-px" style="background:var(--ink)"></span>
         </div>
       </button>
     </div>
   </div>
 
-  <!-- Mobile Menu -->
-  <nav id="mobile-menu" class="hidden md:hidden border-t border-gray-800 bg-black/95">
-    <div class="px-4 py-4 space-y-1">
+  <!-- Mobile nav -->
+  <nav id="mobile-menu" class="hidden md:hidden" style="background:#f5f4ee;border-top:1px solid var(--rule)">
+    <div class="px-4 py-3 space-y-1">
       {navItems.map((item) => (
-        <a 
+        <a
           href={item.href}
-          class={`
-            block px-4 py-2 font-mono text-sm rounded transition-colors duration-200
-            ${isActive(item.href) 
-              ? 'text-white bg-gray-800' 
-              : 'text-gray-400 hover:text-gray-200 hover:bg-gray-900'
-            }
-          `}
+          class="block px-2 py-2 font-mono text-sm tracking-wider"
+          style={isActive(item.href) ? 'color:var(--ink)' : 'color:var(--muted)'}
         >
-          {item.label}
+          <span class="nav-key">[{item.key}]</span>{item.label}
         </a>
       ))}
     </div>
   </nav>
 </header>
 
+<style>
+  header nav a:hover {
+    color: var(--ink) !important;
+  }
+  header nav a:hover .nav-key {
+    color: var(--ink);
+  }
+</style>
+
 <script>
   const button = document.getElementById('mobile-menu-button');
   const menu = document.getElementById('mobile-menu');
-  
-  button?.addEventListener('click', () => {
-    menu?.classList.toggle('hidden');
+  button?.addEventListener('click', () => menu?.classList.toggle('hidden'));
+
+  // Wire bracket-keys to nav: pressing the bracketed letter navigates.
+  // Skip when typing in an input, when modifiers are held, or when text is being selected.
+  const keyMap: Record<string, string> = {
+    h: '/',
+    w: '/writing',
+    p: '/projects',
+    a: '/about',
+  };
+  document.addEventListener('keydown', (e) => {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    const tgt = e.target as HTMLElement | null;
+    if (tgt && (tgt.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(tgt.tagName))) return;
+    const dest = keyMap[e.key.toLowerCase()];
+    if (!dest) return;
+    e.preventDefault();
+    if (window.location.pathname !== dest) window.location.href = dest;
   });
 </script>

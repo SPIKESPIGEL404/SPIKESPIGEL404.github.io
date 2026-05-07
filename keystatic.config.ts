@@ -2,8 +2,7 @@ import { config, collection, singleton, fields } from '@keystatic/core';
 
 export default config({
   storage: {
-    kind: 'local', // Will change to 'github' when deploying
-    // repo: 'kelsenliu/personal-site', // Uncomment when ready to deploy
+    kind: 'local',
   },
 
   ui: {
@@ -14,41 +13,54 @@ export default config({
     home: singleton({
       label: 'Home',
       path: 'content/pages/home',
-      format: 'json',
+      format: { contentField: 'content' },
       schema: {
         name: fields.text({ label: 'Name', defaultValue: 'Kelsen Liu' }),
         tagline: fields.text({ label: 'Tagline', defaultValue: 'Building things on the internet' }),
-        bio: fields.text({ 
+        bio: fields.text({
           label: 'Bio',
-          multiline: true
+          multiline: true,
         }),
         links: fields.array(
           fields.object({
             label: fields.text({ label: 'Label' }),
             url: fields.url({ label: 'URL' }),
           }),
-          { 
-            label: 'Links', 
-            itemLabel: (p) => p.fields.label.value || 'New Link'
+          {
+            label: 'Links',
+            itemLabel: (p) => p.fields.label.value || 'New Link',
           }
         ),
+        content: fields.markdoc({
+          label: 'Body',
+          options: {
+            bold: true,
+            italic: true,
+            link: true,
+            code: true,
+            heading: [2, 3, 4],
+            blockquote: true,
+            orderedList: true,
+            unorderedList: true,
+          },
+        }),
       },
     }),
-    
+
     about: singleton({
       label: 'About',
       path: 'content/pages/about',
-      format: 'json',
+      format: { contentField: 'content' },
       schema: {
         title: fields.text({ label: 'Title', defaultValue: 'About' }),
-        content: fields.markdoc({ 
+        content: fields.markdoc({
           label: 'Content',
           options: {
             bold: true,
             italic: true,
             link: true,
             heading: [2, 3],
-          }
+          },
         }),
       },
     }),
@@ -65,7 +77,7 @@ export default config({
         date: fields.date({ label: 'Date' }),
         description: fields.text({ label: 'Description', multiline: false }),
         draft: fields.checkbox({ label: 'Draft', defaultValue: false }),
-        content: fields.markdoc({ 
+        content: fields.markdoc({
           label: 'Content',
           options: {
             bold: true,
@@ -79,8 +91,8 @@ export default config({
             image: {
               directory: 'public/images/posts',
               publicPath: '/images/posts',
-            }
-          }
+            },
+          },
         }),
       },
     }),
@@ -103,7 +115,7 @@ export default config({
         }),
         github: fields.url({ label: 'GitHub URL' }),
         live: fields.url({ label: 'Live URL' }),
-        content: fields.markdoc({ 
+        content: fields.markdoc({
           label: 'Details',
           options: {
             bold: true,
@@ -111,7 +123,7 @@ export default config({
             link: true,
             code: true,
             heading: [3, 4],
-          }
+          },
         }),
       },
     }),

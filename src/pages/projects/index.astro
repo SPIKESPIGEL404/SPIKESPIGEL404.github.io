@@ -1,83 +1,59 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { createReader } from '@keystatic/core/reader';
-import keystaticConfig from '../../../keystatic.config';
 
-const reader = createReader(process.cwd(), keystaticConfig);
-const projects = await reader.collections.projects.all();
-
-const activeProjects = projects.filter(p => p.entry.status === 'active');
-const archivedProjects = projects.filter(p => p.entry.status === 'archived');
+const projects = await getCollection('projects');
+const activeProjects = projects.filter((p) => p.data.status === 'active');
+const archivedProjects = projects.filter((p) => p.data.status === 'archived');
 ---
 
 <BaseLayout title="Projects - Kelsen Liu">
-  <!-- Header Section -->
-  <section class="mb-16">
-    <div class="text-center">
-      <h1 class="text-5xl md:text-6xl font-bold text-white font-mono mb-4">
-        Projects
-      </h1>
-      <p class="text-gray-400 font-mono text-lg">
-        {activeProjects.length + archivedProjects.length} total repositories
-      </p>
-      <p class="text-gray-500 font-mono text-sm mt-2">
-        {activeProjects.length} active • {archivedProjects.length} archived
-      </p>
-    </div>
+  <section class="pt-8 pb-12">
+    <h1 class="font-mono font-bold leading-[0.95] tracking-tight" style="color:var(--ink);font-size:clamp(3rem,9vw,7rem)">
+      Projects
+    </h1>
+    <p class="mt-4 font-mono text-sm uppercase tracking-wider" style="color:var(--muted)">
+      {activeProjects.length + archivedProjects.length} TOTAL · {activeProjects.length} ACTIVE · {archivedProjects.length} ARCHIVED
+    </p>
   </section>
 
   {activeProjects.length === 0 && archivedProjects.length === 0 ? (
     <div class="card text-center py-12">
-      <h2 class="text-xl font-mono text-white mb-2">No projects found</h2>
-      <p class="text-gray-400 font-mono text-sm">
-        Check back soon for updates
-      </p>
+      <h2 class="text-xl font-mono mb-2" style="color:var(--ink)">No projects found</h2>
+      <p class="text-sm font-mono" style="color:var(--muted)">Check back soon for updates</p>
     </div>
   ) : (
     <>
       {activeProjects.length > 0 && (
         <section class="mb-16">
-          <h2 class="text-2xl font-bold text-white font-mono mb-8">
-            Active Projects
-            <span class="ml-4 text-gray-500 text-sm">({activeProjects.length})</span>
-          </h2>
-          
-          <div class="grid md:grid-cols-2 gap-6">
+          <span class="section-label">/ ACTIVE — ({activeProjects.length})</span>
+
+          <div class="mt-6 grid md:grid-cols-2 gap-0" style="border-left:1px solid var(--rule);border-top:1px solid var(--rule)">
             {activeProjects.map((project) => (
-              <article class="card group">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="text-xl font-mono text-white font-semibold transition-colors">
-                    {project.entry.name}
+              <article class="group p-6" style="border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)">
+                <div class="flex items-start justify-between mb-3">
+                  <h3 class="text-lg font-mono font-semibold" style="color:var(--ink)">
+                    {project.data.name}
                   </h3>
-                  <div class="flex items-center space-x-1">
-                    <div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                    <span class="text-xs text-white font-mono">active</span>
+                  <div class="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider" style="color:var(--ink)">
+                    <span class="w-1.5 h-1.5 rounded-full animate-pulse" style="background:var(--ink)"></span>
+                    ACTIVE
                   </div>
                 </div>
-                
-                <p class="text-gray-300 text-sm mb-4 leading-relaxed">
-                  {project.entry.description}
+
+                <p class="text-sm mb-5 leading-relaxed" style="color:var(--ink)">
+                  {project.data.description}
                 </p>
-                
-                <div class="flex gap-3 text-sm font-mono">
-                  {project.entry.github && (
-                    <a 
-                      href={project.entry.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="btn flex items-center space-x-1"
-                    >
-                      <span>GitHub</span>
+
+                <div class="flex gap-2">
+                  {project.data.github && (
+                    <a href={project.data.github} target="_blank" rel="noopener noreferrer" class="btn">
+                      <span class="nav-key">[G]</span>GITHUB
                     </a>
                   )}
-                  {project.entry.live && (
-                    <a 
-                      href={project.entry.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="bg-gray-800 border border-gray-600 text-gray-300 px-4 py-2 rounded hover:bg-white hover:text-black transition-all duration-300 flex items-center space-x-1"
-                    >
-                      <span>Live Demo</span>
+                  {project.data.live && (
+                    <a href={project.data.live} target="_blank" rel="noopener noreferrer" class="btn">
+                      <span class="nav-key">[L]</span>LIVE
                     </a>
                   )}
                 </div>
@@ -86,51 +62,37 @@ const archivedProjects = projects.filter(p => p.entry.status === 'archived');
           </div>
         </section>
       )}
-      
+
       {archivedProjects.length > 0 && (
         <section>
-          <h2 class="text-2xl font-bold text-gray-500 font-mono mb-8">
-            Archived Projects
-            <span class="ml-4 text-gray-600 text-sm">({archivedProjects.length})</span>
-          </h2>
-          
-          <div class="grid md:grid-cols-2 gap-6">
+          <span class="section-label">/ ARCHIVED — ({archivedProjects.length})</span>
+
+          <div class="mt-6 grid md:grid-cols-2 gap-0" style="border-left:1px solid var(--rule);border-top:1px solid var(--rule)">
             {archivedProjects.map((project) => (
-              <article class="bg-gray-900/30 border border-gray-700/50 rounded-lg p-6 backdrop-blur-sm opacity-75 hover:opacity-100 transition-opacity">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="text-lg font-mono text-gray-400 font-semibold">
-                    {project.entry.name}
+              <article class="p-6" style="border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);opacity:0.65">
+                <div class="flex items-start justify-between mb-3">
+                  <h3 class="text-lg font-mono" style="color:var(--ink)">
+                    {project.data.name}
                   </h3>
-                  <div class="flex items-center space-x-1">
-                    <div class="w-2 h-2 bg-gray-400 rounded-full"></div>
-                    <span class="text-xs text-gray-400 font-mono">archived</span>
+                  <div class="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider" style="color:var(--muted)">
+                    <span class="w-1.5 h-1.5 rounded-full" style="background:var(--muted)"></span>
+                    ARCHIVED
                   </div>
                 </div>
-                
-                <p class="text-gray-500 text-sm mb-4 leading-relaxed">
-                  {project.entry.description}
+
+                <p class="text-sm mb-5 leading-relaxed" style="color:var(--muted)">
+                  {project.data.description}
                 </p>
-                
-                <div class="flex gap-3 text-sm font-mono">
-                  {project.entry.github && (
-                    <a 
-                      href={project.entry.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="bg-transparent border border-gray-600 text-gray-500 px-4 py-2 rounded hover:border-gray-400 hover:text-gray-300 transition-all duration-300 flex items-center space-x-1"
-                    >
-                      <span>[gh]</span>
-                      <span>Code</span>
+
+                <div class="flex gap-2">
+                  {project.data.github && (
+                    <a href={project.data.github} target="_blank" rel="noopener noreferrer" class="btn">
+                      <span class="nav-key">[G]</span>GITHUB
                     </a>
                   )}
-                  {project.entry.live && (
-                    <a 
-                      href={project.entry.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="bg-transparent border border-gray-600 text-gray-500 px-4 py-2 rounded hover:border-gray-400 hover:text-gray-300 transition-all duration-300 flex items-center space-x-1"
-                    >
-                      <span>View</span>
+                  {project.data.live && (
+                    <a href={project.data.live} target="_blank" rel="noopener noreferrer" class="btn">
+                      <span class="nav-key">[V]</span>VIEW
                     </a>
                   )}
                 </div>
@@ -142,15 +104,12 @@ const archivedProjects = projects.filter(p => p.entry.status === 'archived');
     </>
   )}
 
-  <!-- Call to action -->
-  <section class="mt-16 text-center">
-    <div class="max-w-2xl mx-auto">
-      <h3 class="text-xl font-mono text-white mb-4">
-        Interested in collaborating?
-      </h3>
-      <p class="text-gray-400 font-mono">
-        Let's build something amazing together
-      </p>
-    </div>
+  <!-- CTA -->
+  <section class="mt-20 pt-10" style="border-top:1px solid var(--rule)">
+    <h3 class="font-mono text-2xl mb-2" style="color:var(--ink)">Interested in collaborating?</h3>
+    <p class="font-mono text-sm" style="color:var(--muted)">
+      <a href="mailto:hello@kelsenliu.com" class="underline underline-offset-4 hover:no-underline" style="color:var(--ink)">HELLO@KELSENLIU.COM</a>
+      &nbsp;— LET'S BUILD SOMETHING.
+    </p>
   </section>
 </BaseLayout>
